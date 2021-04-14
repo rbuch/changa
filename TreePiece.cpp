@@ -5361,6 +5361,12 @@ void TreePiece::setTreePieceLoad(int activeRung) {
     }
     setObjTime(dLoadExp);
     setObjTime(dLoadExp, activeRung); // Adds load to Charm++'s phase LBDB for use with vector LB strategies
+    for (int i = std::max(0, (int)savedPhaseLoad.size() - 10); i < savedPhaseLoad.size(); i++)
+    {
+      // Adds load to Charm++'s phase LBDB for use with vector LB strategies
+      if (havePhaseData(i) && savedPhaseLoad[i] > 0)
+        setObjTime(savedPhaseLoad[i], i);
+    }
 }
 
   // jetley - contribute your centroid. AtSync is now called by the load balancer (broadcast) when it has
