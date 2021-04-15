@@ -1680,8 +1680,17 @@ Main::loadBalance(int iPhase)
             CkPrintf("Load balancer ... ");
         }
 
-        treeProxy.startlb(CkCallbackResumeThread(), iPhase);
-        double tLB = CkWallTimer()-startTime;
+        static int iter = 0;
+        if (++iter == 8)
+        {
+          iter = 0;
+          treeProxy.startlb(CkCallbackResumeThread(), iPhase);
+        }
+        else
+        {
+          CkPrintf("No balancing!\n");
+        }
+        double tLB = CkWallTimer() - startTime;
         timings[iPhase].tLoadB += tLB;
         CkPrintf("took %g seconds.\n", tLB);
     }
